@@ -1,8 +1,4 @@
-<?php 
-	// print_r($schema);
 
-	// die();
-?>
 
 
 
@@ -23,7 +19,19 @@
 			
 
 			<?php foreach ($respostas as $resposta  ): ?>
-				<?php echo field($resposta, 'nome_dono'); ?>
+				
+				<label>Nome dono</label><br>
+				<?php echo field($resposta, 'nome_dono'); ?><br><br>
+
+				<label>Período</label><br>
+				<?php echo field($resposta, 'periodo'); ?><br><br>
+
+				<label>Tipo de acidente</label><br>
+				<?php echo field($resposta, 'tipo_acidente'); ?><br><br>
+
+
+				<hr>
+
 			<?php endforeach ?>
 
 		<?php endif; ?>

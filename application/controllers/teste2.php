@@ -28,7 +28,7 @@ class Teste2 extends MY_Controller {
             [
                 'name'    => 'cor_carro',
                 'label'   => 'Cor do carro',
-                'type'    => 'checkbox',
+                'type'    => 'checkbox_group',
                 'value'   => 'preto,branco',
                 'choices' => 'preto: Cor Preta;branco: Cor Branca;verde: Cor verde',
                 'parent'  => ''
@@ -61,7 +61,7 @@ class Teste2 extends MY_Controller {
                 [
                     'name'    => 'tipo_acidente',
                     'label'   => 'Tipo de acidente',
-                    'type'    => 'checkbox',
+                    'type'    => 'checkbox_group',
                     'value'   => 'nunhum',
                     'choices' => 'nunhum: Nenhum;leve:Leve; grave: Grave Branca;gravissimo: Gravissimo',
                     'parent'  => 'historico_propriedade'            
@@ -79,18 +79,20 @@ class Teste2 extends MY_Controller {
             [ 'name'    => 'cor_carro',     'value'   => 'Preto',       'index' => 1, 'parent' => null ],
             [ 'name'    => 'cor_carro',     'value'   => 'Branco',      'index' => 2, 'parent' => null],
 
-            // REPEATER
-            // -------------------------------
-            ['name'=> 'nome_dono',    'value'=> 'thiago',           'index'=> 1,    'parent' => 'historico_propriedade'],
-            ['name'=> 'periodo',      'value'=> '2000 - 2005',      'index'=> 1,    'parent' => 'historico_propriedade'],
-            ['name'=> 'tipo_acidente','value'=> 'grave',            'index' => 1,   'parent' => 'historico_propriedade' ],
-            ['name'=> 'tipo_acidente','value'=> 'gravissimo',       'index' => 1,   'parent' => 'historico_propriedade'],
+                // REPEATER
+                // -------------------------------
+                ['name'=> 'nome_dono',    'value'=> 'thiago',           'index'=> 1,    'parent' => 'historico_propriedade'],
+                ['name'=> 'periodo',      'value'=> '2000 - 2005',      'index'=> 1,    'parent' => 'historico_propriedade'],
+                ['name'=> 'tipo_acidente','value'=> 'grave',            'index'=> 1,    'parent' => 'historico_propriedade'],
+                ['name'=> 'tipo_acidente','value'=> 'gravissimo',       'index'=> 1,    'parent' => 'historico_propriedade'],
 
+                // REPEATER
+                // -------------------------------
+                ['name'=> 'nome_dono',    'value'=> 'joão',             'index'=> 2,    'parent' => 'historico_propriedade'],
+                ['name'=> 'periodo',      'value'=> '2006 - 2010',      'index'=> 2,    'parent' => 'historico_propriedade'],
+                ['name'=> 'tipo_acidente','value'=> 'leve',             'index'=> 2,    'parent' => 'historico_propriedade'],
+                ['name'=> 'tipo_acidente','value'=> 'gravissimosss',    'index'=> 2,    'parent' => 'historico_propriedade'],
 
-            ['name'=> 'nome_dono',    'value'=> 'joão',             'index'=> 2,    'parent' => 'historico_propriedade'],
-            ['name'=> 'periodo',      'value'=> '2006 - 2010',      'index'=> 2,    'parent' => 'historico_propriedade'],
-            ['name'=> 'tipo_acidente','value'=> 'leve',             'index' => 2,   'parent' => 'historico_propriedade' ],
-            ['name'=> 'tipo_acidente','value'=> 'gravissimo',       'index' => 2,   'parent' => 'historico_propriedade'],  
         ];
 
         // return json_decode(json_encode([]));       
@@ -105,19 +107,19 @@ class Teste2 extends MY_Controller {
 
         foreach ($stored as $s) {
 
+            // o campo não faz parte de algum grupo
             if( $s->parent == null ){
-
-                $schema->{$s->name}->resposta[$s->index] = $s;
-
+                $schema->{$s->name}->resposta[$s->index][] = $s;
             }else{
                 $structure = $schema->{$s->parent}->fields->{$s->name}->{'structure'};
                 $schema->{$s->parent}->respostas[$s->index][$s->name]['structure'] = $structure;
-                $schema->{$s->parent}->respostas[$s->index][$s->name]['resposta'] = $s;
+                $schema->{$s->parent}->respostas[$s->index][$s->name]['resposta'][] = $s;
+
             }
 
         }
 
-        return json_decode(json_encode($schema));       
+        return $schema;       
 
     }
 
