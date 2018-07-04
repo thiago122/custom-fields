@@ -29,6 +29,10 @@
 			case 'checkbox_group':
 				return fieldCheckboxGroup($field, $structure, $name, $attr);
 				break;
+			case 'checkbox':
+				return fieldCheckbox($field, $structure, $name, $attr);
+				break;
+
 			default:
 				# code...
 				break;
@@ -49,6 +53,7 @@
 	}
 
 	function fieldCheckboxGroup($field, $structure, $name, $attr){
+
 		$choices_ = explode(';', $structure->choices);
 
 		$choices = [];
@@ -67,29 +72,54 @@
 			$respostas[] = trim($resposta->value);
 		}
 
-		$html = '<div>';
+		$html = '';
 		foreach ($choices as $choice) {
 		$checked = in_array($choice['value'], $respostas)? ' checked="checked" ' : '';		
-		$html .= '	<input type="checkbox" name="'. $structure->name .'" value="'.$choice['value'].'" '. $checked .' >' .$choice['label'];
+			
+			$html .= '	<div class="checkbox">';
+			$html .= '		<label>';
+			$html .= '			<input type="checkbox" name="'. $structure->name .'" value="'.$choice['value'].'" '. $checked .' >' .$choice['label'];
+			$html .= '		</label>';
+			$html .= '	</div>';
 		}
-		$html .= '</div>';
-
+		
 		return $html;
 	}
 
+	function fieldCheckbox($field, $structure, $name, $attr){
 
+		$checked = '';
+
+		if( isset($field['resposta']) ){
+			if( $field['resposta'][0]->value == $structure->value ){
+				$checked = ' checked="checked" ';
+			}
+		}
+
+		$html = '';
+		
+		$html .= '	<div class="checkbox">';
+		$html .= '		<label>';
+		$html .= '			<input type="checkbox" name="'. $structure->name .'" value="'. $structure->value .'" '. $checked .' >' . $structure->label;
+		$html .= '		</label>';
+		$html .= '	</div>';
+
+		return $html;
+		
+		return '';
+	}
 
 	function hasReponses($schemaData, $name){
 		
-		if( !isset($schemaData->{$name}) ){
+		if( !isset($schemaData[$name]) ){
 			return false;
 		}
 
-		if( !isset($schemaData->{$name}->respostas) ){
+		if( !isset($schemaData[$name]['respostas']) ){
 			return false;
 		}
 
-		return $schemaData->{$name}->respostas;
+		return $schemaData[$name]['respostas'];
 
 	}
 

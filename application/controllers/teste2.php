@@ -25,11 +25,20 @@ class Teste2 extends MY_Controller {
                 'value'   => '',
                 'parent'  => ''
             ],
+
+            [
+                'name'    => 'possui_ar_condicionado',
+                'label'   => 'Prossui ar condicionado',
+                'type'    => 'checkbox',
+                'value'   => 'Sim',
+                'parent'  => ''
+            ],
+
             [
                 'name'    => 'cor_carro',
                 'label'   => 'Cor do carro',
                 'type'    => 'checkbox_group',
-                'value'   => 'preto,branco',
+                'value'   => '',
                 'choices' => 'preto: Cor Preta;branco: Cor Branca;verde: Cor verde',
                 'parent'  => ''
             ],
@@ -74,10 +83,12 @@ class Teste2 extends MY_Controller {
     public function stored(){
 
         $fields = [
+            
+            [ 'name'    => 'possui_ar_condicionado',   'value'   => 'Sim', 'index' => 1, 'parent' => null ],
 
             [ 'name'    => 'marca_carro',   'value'   => 'Honda civic', 'index' => 1, 'parent' => null ],
-            [ 'name'    => 'cor_carro',     'value'   => 'Preto',       'index' => 1, 'parent' => null ],
-            [ 'name'    => 'cor_carro',     'value'   => 'Branco',      'index' => 2, 'parent' => null],
+            [ 'name'    => 'cor_carro',     'value'   => 'preto',       'index' => 1, 'parent' => null ],
+            [ 'name'    => 'cor_carro',     'value'   => 'branco',      'index' => 2, 'parent' => null],
 
                 // REPEATER
                 // -------------------------------
@@ -109,14 +120,12 @@ class Teste2 extends MY_Controller {
 
             // o campo não faz parte de algum grupo
             if( $s->parent == null ){
-                $schema->{$s->name}->resposta[$s->index][] = $s;
+                $schema[$s->name]['resposta'][] = $s;
             }else{
-                $structure = $schema->{$s->parent}->fields->{$s->name}->{'structure'};
-                $schema->{$s->parent}->respostas[$s->index][$s->name]['structure'] = $structure;
-                $schema->{$s->parent}->respostas[$s->index][$s->name]['resposta'][] = $s;
-
+                $structure = $schema[$s->parent]['fields'][$s->name]['structure'];
+                $schema[$s->parent]['respostas'][$s->index][$s->name]['structure'] = $structure;
+                $schema[$s->parent]['respostas'][$s->index][$s->name]['resposta'][] = $s;
             }
-
         }
 
         return $schema;       
@@ -161,10 +170,9 @@ class Teste2 extends MY_Controller {
                     ];
                 }
             }
-            
         }
 
-        return json_decode(json_encode($mixed));       
+        return $mixed;       
 
     }
 

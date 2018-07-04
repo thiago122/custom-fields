@@ -1,6 +1,6 @@
 
 
-
+<?php // print_r( $schema ) ?>
 
 <html>
 	<head></head>
@@ -9,15 +9,20 @@
 	
 	<form action="<?php echo base_url('teste2/save') ?>">
 		
-		<?php //  echo field($schema, 'marca_carro'); ?>
+		<label>Possui ar condicionado</label><br>
+		<?php echo field($schema, 'possui_ar_condicionado'); ?><br><br>
+
+
+<?php die(); ?>
+
+		<label>Marca</label><br>
+		<?php echo field($schema, 'marca_carro'); ?><br><br>
 	
-		
+		<label>Cor do carro</label>
+		<?php echo field($schema, 'cor_carro') ?>
 
 		<?php if( $respostas = hasReponses($schema, 'historico_propriedade')): ?>
 		
-			<?php // print_r( $respostas ) ?>
-			
-
 			<?php foreach ($respostas as $resposta  ): ?>
 				
 				<label>Nome dono</label><br>
