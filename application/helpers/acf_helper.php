@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 	function attr($attr = []){
@@ -77,27 +77,30 @@
 			$choice_ = explode(':', $choice_);
 			$choices[] = [
 				'value' => trim($choice_[0]),
-				'label' => trim($choice_[1]) 
+				'label' => trim($choice_[1])
 			];
 		}
 
 		$respostas = [];
 
-		foreach ($field['resposta'] as $resposta) {
-			$respostas[] = trim($resposta->value);
+		if(isset($field['resposta'])){
+			foreach ($field['resposta'] as $resposta) {
+				$respostas[] = trim($resposta->value);
+			}
 		}
+
 
 		$html = '';
 		foreach ($choices as $choice) {
-		$checked = in_array($choice['value'], $respostas)? ' checked="checked" ' : '';		
-			
+		$checked = in_array($choice['value'], $respostas)? ' checked="checked" ' : '';
+
 			$html .= '	<div class="checkbox">';
 			$html .= '		<label>';
 			$html .= '			<input type="checkbox" name="'. makeName($structure) .'[]" value="'.$choice['value'].'" '. $checked .' >' .$choice['label'];
 			$html .= '		</label>';
 			$html .= '	</div>';
 		}
-		
+
 		return $html;
 	}
 
@@ -112,7 +115,7 @@
 		}
 
 		$html = '';
-		
+
 		$html .= '	<div class="checkbox">';
 		$html .= '		<label>';
 		$html .= '			<input type="checkbox" name="'. makeName($structure) .'" value="'. $structure->value .'" '. $checked .' >' . $structure->label;
@@ -120,21 +123,21 @@
 		$html .= '	</div>';
 
 		return $html;
-	
+
 	}
 
 	function makeName($structure){
 
 		if(!empty($structure->parent)){
-			return $structure->parent.'[]['.$structure->name.']'; 
+			return $structure->parent.'[]['.$structure->name.']';
 		}
 
 		return $structure->name;
-	
+
 	}
 
 	function hasReponses($schemaData, $name){
-		
+
 		if( !isset($schemaData[$name]) ){
 			return false;
 		}

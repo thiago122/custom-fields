@@ -5,11 +5,11 @@ class Teste2 extends MY_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->helper('acf');
-       
+
     }
 
     public function index(){
-        $schema = $this->schema(); 
+        $schema = $this->schema();
     }
 
     public function schema(){
@@ -77,11 +77,11 @@ class Teste2 extends MY_Controller {
                     'type'    => 'checkbox_group',
                     'value'   => 'nunhum',
                     'choices' => 'nunhum: Nenhum;leve:Leve; grave: Grave Branca;gravissimo: Gravissimo',
-                    'parent'  => 'historico_propriedade'            
+                    'parent'  => 'historico_propriedade'
                 ],
         ];
 
-        return json_decode(json_encode($fields));       
+        return json_decode(json_encode($fields));
     }
 
     public function stored(){
@@ -111,8 +111,8 @@ class Teste2 extends MY_Controller {
 
         ];
 
-        // return json_decode(json_encode([]));       
-        return json_decode(json_encode($fields));       
+        // return json_decode(json_encode([]));
+        return json_decode(json_encode($fields));
 
     }
 
@@ -133,11 +133,11 @@ class Teste2 extends MY_Controller {
             }
         }
 
-        return $schema;       
+        return $schema;
 
     }
 
-   
+
 
     public function organizeSchema(){
 
@@ -161,13 +161,13 @@ class Teste2 extends MY_Controller {
 
                 // se o "Parent" do subcampo existe
                 if( isset($mixed[$field->parent]) ){
-                   
+
                     $mixed[$field->parent]['fields'][$field->name] = [
                         'structure' => $field
                     ];
 
                 }else{
-                    
+
                     $mixed[$field->parent] = [ 'structure' => [] ];
 
                     $mixed[$field->parent]['fields'][$field->name] = [
@@ -177,7 +177,7 @@ class Teste2 extends MY_Controller {
             }
         }
 
-        return $mixed;       
+        return $mixed;
 
     }
 
@@ -191,53 +191,117 @@ class Teste2 extends MY_Controller {
 
 
     public function save(){
-        $schema = $this->organizeSchema();
-        print_r($schema);
 
+        $schema = $this->organizeSchema();
+        // print_r($schema);
+        // print_r( $this->input->post());
         $insert = [];
 
-        foreach ($schema as $sch) {
-            if( isset($sch['fields']) ){
-                foreach ($sch['fields'] as $field){
-                    print_r($field['structure']->name);
+        foreach ($schema as $schemaField) {
 
+            // se é um campo com subcampos
+            if( isset($schemaField['fields']) ){
+
+                // pega o nome do parent
+                $groupName = $schemaField['structure']->name;
+
+                // pega os grupos de respostas do parent
+                $groupRespostas = $this->input->post($groupName);
+
+                // para cada grupo de resposta
+                $i = 0;
+                foreach ($groupRespostas as $groupResposta){
+
+                    // para cada subcampo do grupo
+                    foreach ($schemaField['fields'] as $field){
+
+                        $name    = $field['structure']->name; // pega o name do subcampo
+
+                        // se a resposta existe
+                        if( isset($groupResposta[$field['structure']->name]) ){
+                            $values  = $groupResposta[$field['structure']->name]; // pega a resposta
+
+                            // se o campo possui mais de uma resposta
+                            // Ex: um checkbox cor[]: cor[]: preto, cor:[] branco
+                            // insere cada um com um indice dinâmico
+                            if( is_array($values) ){
+
+                                $j = 0;
+                                foreach ($values as $value) {
+
+                                    $insert[] = [
+                                        'name'    => $name,
+                                        'value'   => $value,
+                                        'index'   => $j,
+                                        'parent'  => $groupName
+                                    ];
+
+                                    $j++;
+                                }
+
+                            }else{
+
+                                // se o campo possui não mais de uma resposta
+                                // seu indice é 0
+                                $insert[] = [
+                                    'name'      => $name,
+                                    'value'     => $values,
+                                    'index'     => 0,
+                                    'parent'    => $groupName
+                                ];
+
+                            }
+
+                        }
+
+
+                    }
+                    $i++;
                 }
-            }else{
 
-                $name = $sch['structure']->name;
+
+            }else{
+                // se não é um campo com subcampos
+
+                $name = $schemaField['structure']->name;
                 $values = $this->input->post($name);
 
+                // se o campo possui mais de uma resposta
+                // Ex: um checkbox cor[]: cor[]: preto, cor:[] branco
+                // insere cada um com um indice dinâmico
                 if(is_array($values)){
 
-                    $j = 0;
+                    $i = 0;
                     foreach ($values as $value) {
 
                         $insert[] = [
-                            'name'    => $name,   
-                            'value'   => $value, 
-                            'index' => $j, 
+                            'name'    => $name,
+                            'value'   => $value,
+                            'index' => $i,
                             'parent' => null
-                        ]; 
+                        ];
 
-                        $j++; 
+                        $i++;
                     }
 
                 }else{
+                    // se o campo possui não mais de uma resposta
+                    // seu indice é 0
                     $insert[] = [
-                        'name'    => $name,   
-                        'value'   => $this->input->post($name), 
-                        'index' => 0, 
-                        'parent' => null
-                    ];                    
+                        'name'      => $name,
+                        'value'     => $values,
+                        'index'     => 0,
+                        'parent'    => null
+                    ];
                 }
 
 
 
             }
-            
+
         }
 
-        echo "--------------------";
+        // echo "--------------------";
 
         print_r($insert);
 

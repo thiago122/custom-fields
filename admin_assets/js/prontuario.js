@@ -45,12 +45,12 @@ function saveFormProntuario(e){
 function duplicateItemProntuario(){
 
 	var clone = $(this).parents('form').find('.js-group-field').eq(0).clone()
-	
+
 	$(clone).find('input[type=text]').val('');
 	$(clone).find('input[type=radio]').removeAttr('checked');
 	$(clone).find('input[type=checkbox]').removeAttr('checked');
-	$(clone).find('option').removeAttr('selected');	
-	
+	$(clone).find('option').removeAttr('selected');
+
 	$(this).parents('form .documento-body').prepend(clone);
 	makeIndexFormFields()
 }
@@ -69,7 +69,7 @@ function makeIndexFormFields(){
 	function _replace(str,indexToReplace){
 		//https://stackoverflow.com/questions/13247864/javascript-replace-string-between-brackets-but-the-brackets-should-stay
 		var rep = '['+indexToReplace+']';
-		
+
 		return str.replace(/\[(.*?)\]/, rep)
 	}
 
@@ -80,7 +80,7 @@ function makeIndexFormFields(){
 		itens.each(function(index){
 
 			var fields = $(this).find('input, text, select');
-			
+
 			fields.each(function(){
 				var name = $(this).attr('name');
 				if( typeof name != 'undefined' ){
@@ -91,8 +91,8 @@ function makeIndexFormFields(){
 			}); // fields
 
 		}); // itens
-		
-	}); // form	
+
+	}); // form
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ function updateStatusBtn(status){
 
 function iniciarAtendimento(){
 	var id_atendimento = $(this).attr('data-id');
-	
+
 	var dados = {
 		id_status_atendimento: 5,
 		id_atendimento: id_atendimento
@@ -142,7 +142,7 @@ function iniciarAtendimento(){
 
 	var request = $.post( base_url + '/admin/atendimento/Atendimento/alterarStatus', dados);
     request.done(function(response){
-    	
+
     	updateStatusBtn(response.data.atendimento.id_status_atendimento)
 		$('.startButton').hide();
 		$('.stopButton').show();
@@ -160,7 +160,7 @@ function encerrarAtendimento(){
 
 	var request = $.post( base_url + '/admin/atendimento/Atendimento/alterarStatus', dados);
     request.done(function(response){
-    	
+
     	updateStatusBtn(response.data.atendimento.id_status_atendimento)
 		$('.startButton').show();
 		$('.stopButton').hide();
