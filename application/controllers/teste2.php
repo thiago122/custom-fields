@@ -95,19 +95,19 @@ class Teste2 extends MY_Controller {
             [ 'name'    => 'cor_carro',     'value'   => 'preto',       'index' => 1, 'parent' => null ],
             [ 'name'    => 'cor_carro',     'value'   => 'branco',      'index' => 2, 'parent' => null],
 
-                // REPEATER
-                // -------------------------------
-                ['name'=> 'nome_dono',    'value'=> 'thiago',           'index'=> 1,    'parent' => 'historico_propriedade'],
-                ['name'=> 'periodo',      'value'=> '2000 - 2005',      'index'=> 1,    'parent' => 'historico_propriedade'],
-                ['name'=> 'tipo_acidente','value'=> 'grave',            'index'=> 1,    'parent' => 'historico_propriedade'],
-                ['name'=> 'tipo_acidente','value'=> 'gravissimo',       'index'=> 1,    'parent' => 'historico_propriedade'],
+            // REPEATER
+            // -------------------------------
+            ['name'=> 'nome_dono',    'value'=> 'thiago',           'index'=> 1,    'parent' => 'historico_propriedade'],
+            ['name'=> 'periodo',      'value'=> '2000 - 2005',      'index'=> 1,    'parent' => 'historico_propriedade'],
+            ['name'=> 'tipo_acidente','value'=> 'grave',            'index'=> 1,    'parent' => 'historico_propriedade'],
+            ['name'=> 'tipo_acidente','value'=> 'gravissimo',       'index'=> 1,    'parent' => 'historico_propriedade'],
 
-                // REPEATER
-                // -------------------------------
-                ['name'=> 'nome_dono',    'value'=> 'joão',             'index'=> 2,    'parent' => 'historico_propriedade'],
-                ['name'=> 'periodo',      'value'=> '2006 - 2010',      'index'=> 2,    'parent' => 'historico_propriedade'],
-                ['name'=> 'tipo_acidente','value'=> 'leve',             'index'=> 2,    'parent' => 'historico_propriedade'],
-                ['name'=> 'tipo_acidente','value'=> 'gravissimosss',    'index'=> 2,    'parent' => 'historico_propriedade'],
+            // REPEATER
+            // -------------------------------
+            ['name'=> 'nome_dono',    'value'=> 'joão',             'index'=> 2,    'parent' => 'historico_propriedade'],
+            ['name'=> 'periodo',      'value'=> '2006 - 2010',      'index'=> 2,    'parent' => 'historico_propriedade'],
+            ['name'=> 'tipo_acidente','value'=> 'leve',             'index'=> 2,    'parent' => 'historico_propriedade'],
+            ['name'=> 'tipo_acidente','value'=> 'gravissimosss',    'index'=> 2,    'parent' => 'historico_propriedade'],
 
         ];
 
@@ -187,6 +187,60 @@ class Teste2 extends MY_Controller {
 
         $GLOBALS['schema'] = $dados['schema'];
         $this->load->view('admin/form/teste2',$dados);
+    }
+
+
+    public function save(){
+        $schema = $this->organizeSchema();
+        print_r($schema);
+
+        $insert = [];
+
+        foreach ($schema as $sch) {
+            if( isset($sch['fields']) ){
+                foreach ($sch['fields'] as $field){
+                    print_r($field['structure']->name);
+
+                }
+            }else{
+
+                $name = $sch['structure']->name;
+                $values = $this->input->post($name);
+
+                if(is_array($values)){
+
+                    $j = 0;
+                    foreach ($values as $value) {
+
+                        $insert[] = [
+                            'name'    => $name,   
+                            'value'   => $value, 
+                            'index' => $j, 
+                            'parent' => null
+                        ]; 
+
+                        $j++; 
+                    }
+
+                }else{
+                    $insert[] = [
+                        'name'    => $name,   
+                        'value'   => $this->input->post($name), 
+                        'index' => 0, 
+                        'parent' => null
+                    ];                    
+                }
+
+
+
+            }
+            
+        }
+
+        echo "--------------------";
+
+        print_r($insert);
+
     }
 
 }

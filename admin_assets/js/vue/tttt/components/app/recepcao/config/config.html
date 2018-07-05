@@ -1,0 +1,36 @@
+        <div class="box box-widget">
+            <div class="box-body form-horizontal">
+                <div class="row">
+
+                    <div class="col-md-2">
+
+                        <label>Data</label>
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" name="dia" class="form-control input-sm vdate datepicker" v-model="dataAtual">
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2">
+                        <label>Clínica</label>
+                        <select class="form-control input-sm" v-model="idClinicaSelecionada">
+                            <option ></option>
+                            <option v-for="option in clinicas"  :value="option.id_clinica">{{ option.nm_clinica }} </option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+
+                        <label>&nbsp;</label>
+                        <div>
+                            <button class="btn btn-sm btn-success" @click="getAtendimentosDia">Selecionar</button>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div><!-- /box-body -->
+        </div><!--/box -->

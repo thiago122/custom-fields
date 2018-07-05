@@ -1,0 +1,188 @@
+/*
+
+Estas classes sobrepões o css do template
+
+futuramente alterar o template
+
+*/
+
+
+.slider.slider-horizontal .tooltip.tooltip-main.top{
+
+    margin-top: -31px;
+
+}
+
+
+/* ------------------------------------- */
+.image-preview-input {
+    position: relative;
+    overflow: hidden;
+    margin: 0px;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.image-preview-input input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.image-preview-input-title {
+    margin-left:2px;
+}
+
+.highlight {
+    padding: 9px 14px;
+    margin: 15px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+}
+
+.modal-validacao{
+    background: #f4f4f4;
+}
+
+.valor-reembolso,
+.obs-reembolso,
+.submit-reembolso{
+    /*display: none;*/
+}
+
+table.tbl-relatorio{
+    font-family: sans-serif
+}
+
+
+table.tbl-relatorio tr > th,
+table.tbl-relatorio tr > td
+{
+    border-color: #d0d0d0;
+}
+
+.table-border-branco{
+    border: #fff !important;
+}
+
+.bg-cinza-claro{
+    background-color: #f7f7f7;
+}
+
+.inlineEdit:hover{
+    background-color: #fbe0e0;
+}
+
+
+/* ----------------------------------------------- */
+
+.box-modal{
+    width: 500px;
+    margin-left: -256px;
+
+    visibility: hidden;
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    z-index: 1060;
+    opacity: 0;
+
+    -webkit-box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 30px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 30px 0px rgba(50, 50, 50, 0.75);
+
+    -webkit-transition: opacity .25s linear;
+    -moz-transition:    opacity .25s linear;
+    transition:         opacity .25s linear;
+}
+
+.box-modal.open{
+    visibility: visible;
+    opacity: 1;
+
+    -webkit-transition: opacity .25s linear;
+    -moz-transition:    opacity .25s linear;
+    transition:         opacity .25s linear;
+}
+
+
+
+/* ----------------------------------------------- */
+/* SELECT2 */
+/* ----------------------------------------------- */
+.select2-container--open{
+    z-index: 1070
+}
+.select2-container--default .select2-selection--single {
+    border: 1px solid #d2d6de;
+    border-radius: 0;
+}
+.select2-container .select2-selection--single {
+    height: 35px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 34px;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1px solid #d2d6de;
+}
+.select2-dropdown{
+    border: 1px solid #d2d6de;
+}
+
+
+/* ----------------------------------------------- */
+/* MODAL WIDE */
+/* ----------------------------------------------- */
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
+
+/* ----------------------------------------------- */
+/* Perfil */
+/* ----------------------------------------------- */
+.fb-profile img.fb-image-lg{
+    z-index: 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.fb-image-profile
+{
+    margin: -90px 10px 0px 50px;
+    z-index: 9;
+    width: 20%;
+}
+
+@media (max-width:768px)
+{
+
+.fb-profile-text>h1{
+    font-weight: 700;
+    font-size:16px;
+}
+
+.fb-image-profile
+{
+    margin: -45px 10px 0px 25px;
+    z-index: 9;
+    width: 20%;
+}
+
+
+/* ------------------------------------------------------ */
+
+
+

@@ -1,0 +1,54 @@
+
+.ts-calendar{
+    overflow: hidden;
+    background: #f4f4f4;
+    color: #333;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+}
+.calendar-header{
+	overflow: hidden;
+}
+.calendar-directions{
+    width: 60px;
+    line-height: 28px;
+    text-align: center;
+    cursor: pointer;
+}
+#calendar-next{
+	float: right;
+	/*background: yellow;*/
+}
+
+#calendar-prev{
+	float:left;
+	/*background: red;*/
+}
+.calendar-title{
+    padding: 3px 10px 0px 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4053b7;
+    border-bottom: 1px solid #dddddd;
+}
+.calendar-week-day,
+.calendar-month-day{
+    width: 14.1%;
+    float: left;
+    line-height: 24px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.calendar-week-day:hover{
+    background: #e4e4e4;
+}
+.day-now{
+    background: #2dc899;
+    color: #fff
+}
+.hasEvent{
+    cursor: pointer;
+	background: #ff9800
+}

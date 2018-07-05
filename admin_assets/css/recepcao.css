@@ -1,0 +1,472 @@
+
+    table.table-grade{
+        /* border: 1px solid #c9c9c9 !important;*/
+    }
+    table.table-grade td{
+        padding: 0 !important;
+        border: 1px solid #c9c9c9 !important;
+    }
+    table.table-grade th{
+        border: 1px solid #c9c9c9 !important;
+    }
+    table.table-grade th{
+        padding: 2px;
+        text-align: center
+    }
+    table.table-grade .intervalo{
+        padding: 2px;
+        text-align: center
+    }
+    table.table-grade .no-border{
+        border: 1px solid #fff !important;
+        border-right: 1px solid #c9c9c9 !important;
+    }
+
+
+
+/* --------------------------------------- */
+
+
+
+    .atendimento{
+        padding: 0px 5px;
+        border-radius: 3px;
+        margin: 2px;
+        color: #525252;
+        background: #f8f8f8;
+        font-size: 12px;
+    }
+    .atendimento.is-margem-dupla{
+        margin-bottom: 4px;
+    }
+
+    .atendimento .time{
+        float: right;
+        color: #000;
+        font-weight: 800;
+        font-size: 12px;
+        font-family: monospace;
+    }
+
+
+    /* ESTADOS DO ATENDIMENTO */
+
+
+    .vago{
+        /*padding-bottom: 16px;*/
+        color: #7f8c8d;
+        border: 1px solid #9E9E9E;
+        border-top-width: 2px;
+    }
+    .agendado{
+        /*color: #333;*/
+        border: 1px solid #9C27B0;
+        border-top-width: 2px;
+    }
+
+    .confirmado{
+        /*color: #5189ba;*/
+        border: 1px solid #2196F3;
+        border-top-width: 2px;
+    }
+
+    .aguardando{
+        /*color: #d98c19;*/
+        border: 1px solid #FF9800;
+        border-top-width: 2px;
+
+    }
+
+    .atendendo{
+        /*color: #d940fe;*/
+        border: 1px solid #ff74a4;
+        border-top-width: 2px;
+    }
+
+    .atendido{
+        /*color: #1b9357;*/
+        border: 1px solid #4CAF50;
+        border-top-width: 2px;
+
+    }
+
+    .cancelado{
+        /*color: #fe4040;*/
+        border: 1px solid #F44336;
+        border-top-width: 2px;
+    }
+
+    .vasio{
+        padding: 8px 5px;
+        margin: 2px;
+        font-size: 12px;
+        color: #707070;
+        border-radius: 3px;
+        /*border-top: 3px solid #f2f2f2;*/
+        background: #ffffff;
+    }
+
+    /* ITEM DA FILA */
+
+    .item-fila{
+        position: relative;
+        background: #fff;
+        border-bottom: 1px solid #ccc;
+        padding: 2px 5px;
+        cursor: pointer;
+    }
+    .item-fila:hover{
+        background-color: #f8f8f8;
+    }
+
+    .item-fila:hover .item-fila__info{
+        display: block;
+    }
+
+    .item-fila__info{
+        width: 250px;
+        position: absolute;
+        top: 0;
+        left: 99%;
+        z-index: 10;
+        display: none;
+        border: 2px solid #c9c9c9;
+        background: #fff;
+        padding: 10px;
+        border-radius: 3px;
+        box-shadow: 5px 6px 20px 0px rgba(0,0,0,.5);
+    }
+
+    .item-fila__info:before{
+        content: '';
+        position: absolute;
+        top: 30px;
+        margin-top: -16px;
+        width: 0;
+        height: 0;
+        border: 8px solid;
+        left: -17px;
+        border-color: transparent #c9c9c9 transparent transparent;
+    }
+
+    .icon-iten-fila{
+        position: absolute;
+        right: 8px;
+        top: 15px;
+    }
+
+    /* ----- */
+    .filtro-fila-status{
+        width: 30%;
+        padding: 0 2px;
+        margin: 0 4px 4px;
+        display: inline-block;
+        font-size: 11px;
+        line-height: 0;
+        border-radius: 3px;
+        border-top-width: 1px;
+        background: #ecf0f5;
+    }
+
+    .filtro-fila-status span{
+        vertical-align: super;
+    }
+
+    .filtro-fila-status input[type-checkbox]{
+        margin-top: 1px;
+    }
+
+/* AUTO COMPLETE */
+    .ts-autocomplete-wrapper::before,
+    .ts-autocomplete-wrapper::after{
+        display: table;
+        content: " ";
+    }
+    .ts-autocomplete-wrapper::after{
+        clear: both;
+    }
+    .ts-autocomplete{
+        width: 100%;
+        position: relative;
+
+    }
+
+    .ts-autocomplete .options-container {
+        left: 0;
+        position: absolute;
+        width: 100%;
+        z-index: 10;
+    }
+    .input-group .ts-autocomplete .options-container {
+        top: 33px;
+    }
+    .ts-autocomplete ul{
+        position: relative;
+        margin: 1px 0;
+        padding: 0;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+
+        -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+        -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+        box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    }
+    .ts-autocomplete ul li{
+        list-style: none;
+        padding: 8px 5px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .panel-heading .ts-autocomplete-wrapper{
+        margin-top: -7px;
+    }
+/* customização do autocomplete do paciente */
+    .autocomplete-pacinete .form-control{
+        border-radius: 0;
+        border-color: #00a7d0;
+        border-radius: 3px;
+        height: 29px;
+    }
+    .autocomplete-pacinete .form-control-feedback{
+        top: -3px;
+    }
+
+/* LOADING*/
+    .loading-container{
+        margin-left: -75px;
+        width: 150px;
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        z-index: 1131;
+        text-align: center;
+        font-size: 17px
+    }
+    .loading-inner{
+        background: #fff;
+        padding: 10px;
+        border: 1px solid #d6d4d4;
+    }
+/* ALERT */
+.container-alerts{
+    position: fixed;
+    bottom: 0px;
+    right: 20px;
+    z-index: 10000
+}
+
+/* POPOVER STATUS */
+.popover-status-container{
+    display: inline-block;
+    position: relative;
+    float: right;
+}
+.popover-status{
+    left: -120px;
+}
+
+.popover-status.left>.arrow {
+    top: 6%;
+}
+
+.popover-status.left>.arrow:after {
+    right: 2px;
+    border-left-color: #f7f7f7;
+}
+
+/* CUSTOMIZAÇÂO DOS BOXES */
+.box.box-clean.box-success > .box-header {
+    color: #00a65a;
+    background: #ffffff;
+    background-color: #ffffff;
+    border-bottom: 1px solid #00a65a;
+}
+
+.box.box-clean.box-warning > .box-header {
+    color: #f39c12;
+    background: #ffffff;
+    background-color: #ffffff;
+    border-bottom: 1px solid #f39c12;
+}
+
+.box.box-solid.box-aqua-active {
+    border: 1px solid #00a7d0;
+}
+
+.box.box-clean.box-aqua-active > .box-header {
+    color: #00a7d0;
+    background: #ffffff;
+    background-color: #ffffff;
+    border-bottom: 1px solid #00a7d0;
+}
+
+/* listagem de atendimentos do dia - pesquisa */
+
+.list-atendimentos-dia{
+    border: 1px solid #ddd;
+    border-radius: 3px
+}
+
+.list-atendimentos-dia__header{
+    padding: 5px;
+    color: #777;
+    cursor: not-allowed;
+    background-color: #eee;
+}
+
+.list-atendimentos-dia__body{
+    height: 458px;
+    overflow: auto;
+}
+
+.list-atendimentos-dia__item {
+    position: relative;
+    display: block;
+    padding: 5px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.list-atendimentos-dia___item:last-child {
+    border: 0;
+}
+
+.list-atendimentos-dia__profissional{
+    color: #323fac;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.list-atendimentos-dia__hora{
+    color: #414143;
+    font-size: 12px;
+    display: block;
+    font-weight: 700;
+}
+
+/* SALA DE ESPERA */
+
+.sala-espera__profissionais{
+    max-width: 60px;
+    position: absolute;
+    top: 0;
+    left: 12px;
+    /*float: left;*/
+    text-align: center;
+}
+.sala-espera__fila{
+    margin-left: 70px;
+    /*overflow: hidden;*/
+}
+
+.sala-espera__fila .box{
+    min-height: 500px;
+}
+
+.sala-espera__profissional{
+    margin-bottom: 20px;
+    font-size: 11px;
+
+}
+.sala-espera__avatar-profissional{
+    max-width: 40px;
+    display: inline-block;
+    border-radius: 50%;
+    border: 3px solid #cfd1d4;
+    cursor: pointer;
+}
+.sala-espera__avatar-profissional.selecionado{
+    border-color: #3c8dbc;
+}
+
+
+/* BTNS FILA */
+
+
+.btn-fila-play,
+.btn-fila-stop{
+    border: 1px solid #88f092;
+    padding: 1px 4px 1px 1px;
+    color: #fff;
+    border-radius: 2px;
+    background: #88f092;
+    cursor: pointer;
+}
+
+.btn-fila-play{
+    border-color: #09b55f;
+    border-radius: 2px;
+    background: #09b55f;
+}
+.btn-fila-stop{
+    border-color: #fe4040;
+    border-radius: 2px;
+    background: #fe4040;
+}
+
+
+/* ------------------ PREVIEW --------- */
+.preview{
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    border-radius: 3px;
+    border: 1px solid #d2d6de;
+}
+
+.preview__avatar{
+    width: 55px;
+    padding: 0px 10px 0px 0px;
+    float: left;
+}
+
+.preview__avatar-image{
+    width: 100%;
+    border: 2px solid #d2d6de;
+}
+
+.preview__info-col{
+    padding: 0px 10px 0px 0px;
+    float: left;
+}
+
+.preview__label{
+    padding: 1px 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #d2d6de;
+
+    -moz-border-radius-bottomleft: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+
+.preview__btn-excluir{
+    margin-top: 5px;
+}
+
+/* cores */
+.preview.is-profissional{
+    border-color: #ff7701;
+}
+.preview__avatar-image.is-profissional{
+    border-color: #ff7701;
+}
+.preview__label.is-profissional{
+    background-color: #ff7701;
+    color: #fff
+}
+
+.preview.is-paciente{
+    border-color: #00a7d0;
+}
+.preview__avatar-image.is-paciente{
+    border-color: #00a7d0;
+}
+.preview__label.is-paciente{
+    background-color: #00a7d0;
+    color: #fff
+}

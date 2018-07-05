@@ -50,7 +50,7 @@
 			$value = $structure->value;
 		}
 
-		return '<input type="text" '. $attr .'  value="'. $value .'" name="'. $structure->name .'">';
+		return '<input type="text" '. $attr .'  value="'. $value .'" name="'. makeName($structure) .'">';
 
 	}
 
@@ -63,7 +63,7 @@
 			$value = $structure->value;
 		}
 
-		return '<textarea '. $attr .' name="'. $structure->name .'">'. $value .'</textarea>';
+		return '<textarea '. $attr .' name="'. makeName($structure) .'">'. $value .'</textarea>';
 
 	}
 
@@ -93,7 +93,7 @@
 			
 			$html .= '	<div class="checkbox">';
 			$html .= '		<label>';
-			$html .= '			<input type="checkbox" name="'. $structure->name .'" value="'.$choice['value'].'" '. $checked .' >' .$choice['label'];
+			$html .= '			<input type="checkbox" name="'. makeName($structure) .'[]" value="'.$choice['value'].'" '. $checked .' >' .$choice['label'];
 			$html .= '		</label>';
 			$html .= '	</div>';
 		}
@@ -115,11 +115,21 @@
 		
 		$html .= '	<div class="checkbox">';
 		$html .= '		<label>';
-		$html .= '			<input type="checkbox" name="'. $structure->name .'" value="'. $structure->value .'" '. $checked .' >' . $structure->label;
+		$html .= '			<input type="checkbox" name="'. makeName($structure) .'" value="'. $structure->value .'" '. $checked .' >' . $structure->label;
 		$html .= '		</label>';
 		$html .= '	</div>';
 
 		return $html;
+	
+	}
+
+	function makeName($structure){
+
+		if(!empty($structure->parent)){
+			return $structure->parent.'[]['.$structure->name.']'; 
+		}
+
+		return $structure->name;
 	
 	}
 
