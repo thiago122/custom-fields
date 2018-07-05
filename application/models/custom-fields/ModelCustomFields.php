@@ -8,21 +8,23 @@ class ModelCustomFields extends CI_model {
     }
 
     // pega todos os campos do formulário
-    function getSchema( $idPronturario ){
-        return $this->db->where('prontuario_id', $idPronturario)
+    function getSchema( $idProntuario ){
+        return $this->db->where('prontuario_id', $idProntuario)
                         ->get('campos_prontuario')->result();
     }
 
-    function getRespostas( $idAtendimento ){
-        return $this->db->order_by('parent', 'ASC')
+    function getRespostas( $idAtendimento, $idProntuario ){
+        return $this->db->where('atendimento_id', $idAtendimento)
+                        ->where('prontuario_id', $idProntuario)
+                        ->order_by('parent', 'ASC')
                         ->order_by('index', 'ASC')
                         ->get('resposta')->result();
     }
 
-    function getCompiledData( $idAtendimento, $idPronturario ){
+    function getCompiledData( $idAtendimento, $idProntuario ){
 
-        $campos     = $this->getSchema($idPronturario);
-        $respostas  = $this->getRespostas($idPronturario, $idAtendimento);
+        $campos     = $this->getSchema($idProntuario);
+        $respostas  = $this->getRespostas($idAtendimento, $idProntuario);
 
         $schema = $this->FormatterCustomField->organizeSchema( $campos );
         $schema = $this->FormatterCustomField->merge($schema, $respostas);
@@ -30,14 +32,14 @@ class ModelCustomFields extends CI_model {
         return $schema;
     }
 
-    function save($idAtendimento, $idprontuario){
+    function save($idAtendimento, $idProntuario){
 
-        $schema = $this->getSchema( $idprontuario );
+        $schema = $this->getSchema( $idProntuario );
         $schema = $this->FormatterCustomField->organizeSchema( $schema );
-        $insert = $this->FormatterCustomField->prepareToSave( $schema, $idAtendimento, $idprontuario);
+        $insert = $this->FormatterCustomField->prepareToSave( $schema, $idAtendimento, $idProntuario);
 
         $this->db->where('atendimento_id', $idAtendimento);
-        $this->db->where('prontuario_id', $idprontuario);
+        $this->db->where('prontuario_id', $idProntuario);
         $this->db->delete('resposta');
 
         $this->db->insert_batch('resposta', $insert);

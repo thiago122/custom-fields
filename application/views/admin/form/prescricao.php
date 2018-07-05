@@ -71,9 +71,14 @@
 	<form action="<?php echo base_url('teste2/save') ?>" class="js-form">
 
 
-
-
-
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Observações</label>
+                    <?php echo field($schema, 'obs', ['class' => 'form-control']); ?>
+                </div>
+            </div>
+        </div>
 
 		<?php if( $respostas = hasReponses($schema, 'repeater_procedimento')): ?>
 
@@ -86,7 +91,7 @@
 				    <div class="row">
 				        <div class="col-md-4">
 				            <div class="form-group">
-				                <label>Nome dono</label>
+				                <label>Procedimento</label>
 								<?php echo field($resposta, 'procedimento', ['class' => 'form-control'], $schema['repeater_procedimento']); ?>
 				            </div>
 				        </div>
