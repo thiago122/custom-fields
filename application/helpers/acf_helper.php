@@ -15,9 +15,14 @@
 
 	}
 
-	function field($schemaData, $name, $attr = []){
+	function field($schemaData, $name, $attr = [], $schema = []){
 
-		$field = $schemaData[$name];
+		if(isset($schemaData[$name])){
+			$field = $schemaData[$name];
+		}else{
+			$field = $schema['fields'][$name];
+		}
+
 		$structure = $field['structure'];
 
 		$attr = attr($attr);
@@ -30,6 +35,7 @@
 				return fieldCheckboxGroup($field, $structure, $name, $attr);
 				break;
 			case 'checkbox':
+
 				return fieldCheckbox($field, $structure, $name, $attr);
 				break;
 			case 'textarea':
@@ -121,6 +127,8 @@
 		$html .= '			<input type="checkbox" name="'. makeName($structure) .'" value="'. $structure->value .'" '. $checked .' >' . $structure->label;
 		$html .= '		</label>';
 		$html .= '	</div>';
+
+
 
 		return $html;
 

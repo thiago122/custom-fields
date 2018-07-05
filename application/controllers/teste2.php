@@ -115,6 +115,27 @@ class Teste2 extends MY_Controller {
 
     }
 
+    public function showFormPrescricao(){
+
+        $this->load->model('custom-fields/FormatterCustomField');
+        $this->load->model('custom-fields/ModelCustomFields');
+
+        // $campos     = $this->ModelCustomFields->getSchema(4);
+
+        // $respostas  = $this->db->order_by('parent', 'ASC')
+        //                        ->order_by('index', 'ASC')
+        //                        ->get('resposta')->result();
+        // $schema = $campos;
+        // $stored = $respostas;
+        // $schema = $this->FormatterCustomField->organizeSchema( $schema );
+        // $schema = $this->FormatterCustomField->merge($schema, $stored);
+        // $dados['schema'] = $schema;
+
+
+        $dados['schema'] = $this->ModelCustomFields->getCompiledData(3175, 4);
+
+        $this->load->view('admin/form/prescricao',$dados);
+    }
 
 
     public function showForm(){
@@ -134,6 +155,19 @@ class Teste2 extends MY_Controller {
 
 
     public function save(){
+
+        $this->load->model('custom-fields/FormatterCustomField');
+        $this->load->model('custom-fields/ModelCustomFields');
+
+        // $schema = $this->ModelCustomFields->getSchema( 4 );
+        // $schema = $this->FormatterCustomField->organizeSchema( $schema );
+        // $insert = $this->FormatterCustomField->prepareToSave( $schema, 3175, 4);
+
+        $insert = $this->ModelCustomFields->save( 3175, 4);
+        print_r($insert);
+    }
+
+    public function _save(){
 
         $this->load->model('custom-fields/FormatterCustomField');
         $schema = $this->schema();

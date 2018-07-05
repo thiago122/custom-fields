@@ -10,7 +10,7 @@ class FormatterCustomField extends MY_model {
     }
 
     /**
-
+        Junta as respostas armezenasdas com a estrutura organizada
      */
     public function merge( $schema = [], $stored = []){
 
@@ -75,7 +75,7 @@ class FormatterCustomField extends MY_model {
     }
 
     /** organiza o array para salvar */
-    public function prepareToSave($organizedSchema = []){
+    public function prepareToSave($organizedSchema = [], $idAtendimento, $idProntuario){
 
         $schema = $organizedSchema;
         // print_r($schema);
@@ -115,10 +115,12 @@ class FormatterCustomField extends MY_model {
                                 foreach ($values as $value) {
 
                                     $insert[] = [
-                                        'name'    => $name,
-                                        'value'   => $value,
-                                        'index'   => $j,
-                                        'parent'  => $groupName
+                                        'name'           => $name,
+                                        'value'          => $value,
+                                        'index'          => $j,
+                                        'parent'         => $groupName,
+                                        'atendimento_id' => $idAtendimento,
+                                        'prontuario_id'  => $idProntuario,
                                     ];
 
                                     $j++;
@@ -129,18 +131,20 @@ class FormatterCustomField extends MY_model {
                                 // se o campo possui não mais de uma resposta
                                 // seu indice é 0
                                 $insert[] = [
-                                    'name'      => $name,
-                                    'value'     => $values,
-                                    'index'     => 0,
-                                    'parent'    => $groupName
+                                    'name'           => $name,
+                                    'value'          => $values,
+                                    'index'          => $i,
+                                    'parent'         => $groupName,
+                                    'atendimento_id' => $idAtendimento,
+                                    'prontuario_id'  => $idProntuario,
                                 ];
 
                             }
 
                         }
 
-
                     }
+
                     $i++;
                 }
 
@@ -159,10 +163,12 @@ class FormatterCustomField extends MY_model {
                     foreach ($values as $value) {
 
                         $insert[] = [
-                            'name'    => $name,
-                            'value'   => $value,
-                            'index' => $i,
-                            'parent' => null
+                            'name'           => $name,
+                            'value'          => $value,
+                            'index'          => $i,
+                            'parent'         => null,
+                            'atendimento_id' => $idAtendimento,
+                            'prontuario_id'  => $idProntuario,
                         ];
 
                         $i++;
@@ -172,10 +178,12 @@ class FormatterCustomField extends MY_model {
                     // se o campo possui não mais de uma resposta
                     // seu indice é 0
                     $insert[] = [
-                        'name'      => $name,
-                        'value'     => $values,
-                        'index'     => 0,
-                        'parent'    => null
+                        'name'           => $name,
+                        'value'          => $values,
+                        'index'          => 0,
+                        'parent'         => null,
+                        'atendimento_id' => $idAtendimento,
+                        'prontuario_id'  => $idProntuario,
                     ];
                 }
 
