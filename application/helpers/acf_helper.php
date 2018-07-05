@@ -32,7 +32,9 @@
 			case 'checkbox':
 				return fieldCheckbox($field, $structure, $name, $attr);
 				break;
-
+			case 'textarea':
+				return fieldTextArea($field, $structure, $name, $attr);
+				break;
 			default:
 				# code...
 				break;
@@ -49,6 +51,19 @@
 		}
 
 		return '<input type="text" '. $attr .'  value="'. $value .'" name="'. $structure->name .'">';
+
+	}
+
+
+	function fieldTextArea($field, $structure, $name, $attr){
+
+		if( isset($field['resposta']) ){
+			$value = $field['resposta'][0]->value;
+		}else{
+			$value = $structure->value;
+		}
+
+		return '<textarea '. $attr .' name="'. $structure->name .'">'. $value .'</textarea>';
 
 	}
 
@@ -105,8 +120,7 @@
 		$html .= '	</div>';
 
 		return $html;
-		
-		return '';
+	
 	}
 
 	function hasReponses($schemaData, $name){

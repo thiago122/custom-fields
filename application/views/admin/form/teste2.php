@@ -9,11 +9,14 @@
 	
 	<form action="<?php echo base_url('teste2/save') ?>">
 		
+		<label>Observações</label><br>
+
+		<?php echo field($schema, 'observacoes'); ?><br><br>	
+
+
 		<label>Possui ar condicionado</label><br>
 		<?php echo field($schema, 'possui_ar_condicionado'); ?><br><br>
 
-
-<?php die(); ?>
 
 		<label>Marca</label><br>
 		<?php echo field($schema, 'marca_carro'); ?><br><br>

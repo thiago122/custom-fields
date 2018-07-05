@@ -10,14 +10,18 @@ class Teste2 extends MY_Controller {
 
     public function index(){
         $schema = $this->schema(); 
-
-
     }
-
 
     public function schema(){
 
         $fields = [
+            [
+                'name'    => 'observacoes',
+                'label'   => 'Observações',
+                'type'    => 'textarea',
+                'value'   => '',
+                'parent'  => ''
+            ],
             [
                 'name'    => 'marca_carro',
                 'label'   => 'Marca do carro',
@@ -83,7 +87,8 @@ class Teste2 extends MY_Controller {
     public function stored(){
 
         $fields = [
-            
+
+            [ 'name'    => 'observacoes',   'value'   => 'Sim', 'index' => 1, 'parent' => null ],
             [ 'name'    => 'possui_ar_condicionado',   'value'   => 'Sim', 'index' => 1, 'parent' => null ],
 
             [ 'name'    => 'marca_carro',   'value'   => 'Honda civic', 'index' => 1, 'parent' => null ],
