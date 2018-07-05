@@ -5,11 +5,10 @@ class Teste2 extends MY_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->helper('acf');
-
     }
 
     public function index(){
-        $schema = $this->schema();
+        $schema = $this->showForm();
     }
 
     public function schema(){
@@ -117,194 +116,32 @@ class Teste2 extends MY_Controller {
     }
 
 
-    public function merge(){
-        $stored = $this->stored();
-        $schema = $this->organizeSchema();
-
-        foreach ($stored as $s) {
-
-            // o campo não faz parte de algum grupo
-            if( $s->parent == null ){
-                $schema[$s->name]['resposta'][] = $s;
-            }else{
-                $structure = $schema[$s->parent]['fields'][$s->name]['structure'];
-                $schema[$s->parent]['respostas'][$s->index][$s->name]['structure'] = $structure;
-                $schema[$s->parent]['respostas'][$s->index][$s->name]['resposta'][] = $s;
-            }
-        }
-
-        return $schema;
-
-    }
-
-
-
-    public function organizeSchema(){
-
-        $schema = $this->schema();
-
-        $mixed = [];
-
-        foreach ($schema as $field) {
-
-            // o campo não é um subcampo
-            if($field->parent == null){
-
-                // se o campos não existe no vetor principal
-                if( !isset($mixed[$field->name]) ){
-                    $mixed[$field->name] = ['structure' => $field];
-                }else{
-                    $mixed[$field->name]['structure'] = $field;
-                }
-
-            }else{
-
-                // se o "Parent" do subcampo existe
-                if( isset($mixed[$field->parent]) ){
-
-                    $mixed[$field->parent]['fields'][$field->name] = [
-                        'structure' => $field
-                    ];
-
-                }else{
-
-                    $mixed[$field->parent] = [ 'structure' => [] ];
-
-                    $mixed[$field->parent]['fields'][$field->name] = [
-                        'structure' => $field
-                    ];
-                }
-            }
-        }
-
-        return $mixed;
-
-    }
-
 
     public function showForm(){
-        $dados['schema'] = $this->merge();
 
-        $GLOBALS['schema'] = $dados['schema'];
+        $this->load->model('custom-fields/FormatterCustomField');
+
+        $schema = $this->schema();
+        $stored = $this->stored();
+
+        $schema = $this->FormatterCustomField->organizeSchema( $schema );
+        $schema = $this->FormatterCustomField->merge($schema, $stored);
+
+        $dados['schema'] = $schema;
+
         $this->load->view('admin/form/teste2',$dados);
     }
 
 
     public function save(){
 
-        $schema = $this->organizeSchema();
-        // print_r($schema);
-        // print_r( $this->input->post());
-        $insert = [];
-
-        foreach ($schema as $schemaField) {
-
-            // se é um campo com subcampos
-            if( isset($schemaField['fields']) ){
-
-                // pega o nome do parent
-                $groupName = $schemaField['structure']->name;
-
-                // pega os grupos de respostas do parent
-                $groupRespostas = $this->input->post($groupName);
-
-                // para cada grupo de resposta
-                $i = 0;
-                foreach ($groupRespostas as $groupResposta){
-
-                    // para cada subcampo do grupo
-                    foreach ($schemaField['fields'] as $field){
-
-                        $name    = $field['structure']->name; // pega o name do subcampo
-
-                        // se a resposta existe
-                        if( isset($groupResposta[$field['structure']->name]) ){
-                            $values  = $groupResposta[$field['structure']->name]; // pega a resposta
-
-                            // se o campo possui mais de uma resposta
-                            // Ex: um checkbox cor[]: cor[]: preto, cor:[] branco
-                            // insere cada um com um indice dinâmico
-                            if( is_array($values) ){
-
-                                $j = 0;
-                                foreach ($values as $value) {
-
-                                    $insert[] = [
-                                        'name'    => $name,
-                                        'value'   => $value,
-                                        'index'   => $j,
-                                        'parent'  => $groupName
-                                    ];
-
-                                    $j++;
-                                }
-
-                            }else{
-
-                                // se o campo possui não mais de uma resposta
-                                // seu indice é 0
-                                $insert[] = [
-                                    'name'      => $name,
-                                    'value'     => $values,
-                                    'index'     => 0,
-                                    'parent'    => $groupName
-                                ];
-
-                            }
-
-                        }
-
-
-                    }
-                    $i++;
-                }
-
-
-            }else{
-                // se não é um campo com subcampos
-
-                $name = $schemaField['structure']->name;
-                $values = $this->input->post($name);
-
-                // se o campo possui mais de uma resposta
-                // Ex: um checkbox cor[]: cor[]: preto, cor:[] branco
-                // insere cada um com um indice dinâmico
-                if(is_array($values)){
-
-                    $i = 0;
-                    foreach ($values as $value) {
-
-                        $insert[] = [
-                            'name'    => $name,
-                            'value'   => $value,
-                            'index' => $i,
-                            'parent' => null
-                        ];
-
-                        $i++;
-                    }
-
-                }else{
-                    // se o campo possui não mais de uma resposta
-                    // seu indice é 0
-                    $insert[] = [
-                        'name'      => $name,
-                        'value'     => $values,
-                        'index'     => 0,
-                        'parent'    => null
-                    ];
-                }
-
-
-
-            }
-
-        }
-
-        // echo "--------------------";
-
+        $this->load->model('custom-fields/FormatterCustomField');
+        $schema = $this->schema();
+        $schema = $this->FormatterCustomField->organizeSchema( $schema );
+        $insert = $this->FormatterCustomField->prepareToSave( $schema );
         print_r($insert);
-
     }
+
+
 
 }
